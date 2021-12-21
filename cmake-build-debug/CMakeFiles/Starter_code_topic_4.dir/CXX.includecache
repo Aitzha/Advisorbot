@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/UoL/OOP/unzipped/Starter code topic 4/CSVReader.h
+OrderBookEntry.h
+D:/UoL/OOP/unzipped/Starter code topic 4/OrderBookEntry.h
+vector
+-
+string
+-
+
+D:/UoL/OOP/unzipped/Starter code topic 4/OrderBook.cpp
+OrderBook.h
+D:/UoL/OOP/unzipped/Starter code topic 4/OrderBook.h
+CSVReader.h
+D:/UoL/OOP/unzipped/Starter code topic 4/CSVReader.h
+map
+-
+iostream
+-
+algorithm
+-
+
+D:/UoL/OOP/unzipped/Starter code topic 4/OrderBook.h
+OrderBookEntry.h
+D:/UoL/OOP/unzipped/Starter code topic 4/OrderBookEntry.h
+CSVReader.h
+D:/UoL/OOP/unzipped/Starter code topic 4/CSVReader.h
+string
+-
+vector
+-
+
+D:/UoL/OOP/unzipped/Starter code topic 4/OrderBookEntry.h
+string
+-
+
