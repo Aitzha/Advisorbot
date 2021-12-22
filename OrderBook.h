@@ -8,8 +8,8 @@ class OrderBook {
 public:
     //construct, reading a csv data file
     OrderBook(std::string filename);
-    //return vector of all known products in the dataset
-    std::vector<std::string> getKnownProducts();
+    //return vector of all known products in the dataset (changed by student)
+    std::vector<std::string> getKnownProducts(std::string const &currentTime);
     //return vector of Orders according to the sent filters
     std::vector<OrderBookEntry> getOrders(OrderBookType type,
                                           std::string product,

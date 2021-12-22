@@ -1,6 +1,7 @@
 #include "OrderBook.h"
 #include "CSVReader.h"
 #include <map>
+#include <unordered_map>
 #include <iostream>
 #include <algorithm>
 
@@ -8,12 +9,17 @@ OrderBook::OrderBook(std::string filename) {
     orders = CSVReader::readCSV(filename);
 }
 
-std::vector<std::string> OrderBook::getKnownProducts() {
+std::vector<std::string> OrderBook::getKnownProducts(std::string const &currentTime) {
+    //changes: use unordered_map instead of map and made function to find product only from current time step
     std::vector<std::string> products;
-    std::map<std::string, bool> prodMap;
+    std::unordered_map<std::string, bool> prodMap;
 
     for(OrderBookEntry& e : orders) {
-        prodMap[e.product] = true;
+        if(e.timestamp == currentTime) {
+            prodMap[e.product] = true;
+        } else if(e.timestamp > currentTime) {
+            break;
+        }
     }
 
     for(auto const &e : prodMap) {
