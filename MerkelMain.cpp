@@ -3,7 +3,6 @@
 #include <vector>
 #include "OrderBookEntry.h"
 #include "CSVReader.h"
-#include "Wallet.h"
 
 MerkelMain::MerkelMain()
 {
@@ -15,14 +14,10 @@ MerkelMain::MerkelMain()
     //greeting user
     std::cout << "Welcome, I am Advisorbot. "
                  "I am command line program that can help you you with cryptocurrency investing analyse" << std::endl;
-
-    std::cout << "Before start using Advisorbot, you have 1000 USDT in Advisorbot wallet." << std::endl;
-    std::cout << "You can deposit additional crypto to your wallet by command \"deposit _cryptoName, _amount\"" << std::endl;
     std::cout << "Please enter \"help\" to to see all available commands" << std::endl;
 
 
     currentTime = orderBook.getEarliestTime();
-    wallet.addCurrency("USDT", 1000);
 
     while(true) {
         printMenu();
@@ -40,7 +35,8 @@ void MerkelMain::printMenu()
 void MerkelMain::printHelp()
 {
     std::cout << "All available commands: " << std::endl;
-    std::cout << "help, help <cmd>, prod, min, max, avg, predict, time, step, deposit" << std::endl;
+    std::cout << "help, help <cmd>, prod, min, max, avg, predict, time, "
+                 "step, step back, step <num>, step back <num>" << std::endl;
 }
 
 void MerkelMain::printHelpCmd(std::string &cmd) {
@@ -100,12 +96,6 @@ void MerkelMain::printHelpCmd(std::string &cmd) {
         return;
     }
 
-    if(cmd == "deposit" || cmd == "Deposit") {
-        std::cout << cmd << " - deposit sent number of sent product to the Advisorbot wallet" << std::endl;
-        std::cout << "Format: deposit _product _amount" << std::endl;
-        std::cout << "Example: deposit BTC 1" << std::endl;
-        return;
-    }
 
     std::cout << "MerkelMain::printHelpCmd Unknown command" << std::endl;
 }
@@ -136,12 +126,12 @@ void MerkelMain::processUserOption() {
         printMax(tokens);
         return;
     }
-    if((tokens[0] == "avg" || tokens[0] == "Avg") && tokens.size() == 1) {
-        printMarketStats();
+    if((tokens[0] == "avg" || tokens[0] == "Avg") && tokens.size() == 4) {
+        printAvg(tokens);
         return;
     }
-    if((tokens[0] == "predict" || tokens[0] == "Predict") && tokens.size() == 1) {
-        printMarketStats();
+    if((tokens[0] == "predict" || tokens[0] == "Predict") && tokens.size() == 4) {
+        printPrediction(tokens);
         return;
     }
     if((tokens[0] == "time" || tokens[0] == "Time") && tokens.size() == 1) {
@@ -151,6 +141,11 @@ void MerkelMain::processUserOption() {
     if((tokens[0] == "step" || tokens[0] == "Step") && tokens.size() == 1) {
         gotoNextTimeframe();
         return;
+    }
+    if((tokens[0] == "step" || tokens[0] == "Step") &&
+       (tokens[1] == "back") &&
+       tokens.size() == 2) {
+        gotoPrevTimeframe();
     }
 
 
@@ -172,7 +167,20 @@ void MerkelMain::printMin(const std::vector<std::string> &tokens) {
     std::string product = tokens[1];
     std::vector<OrderBookEntry> entries;
 
-    //finding order type
+    //check for existence of the product
+    std::vector<std::string> listOfProducts = orderBook.getKnownProducts(currentTime);
+    for(std::string &s : listOfProducts) {
+        if(s == product) {
+            break;
+        }
+
+        if(s != product && s == listOfProducts.back()) {
+            std::cout << "MerkelMain::printMin no matching product for current time" << std::endl;
+            return;
+        }
+    }
+
+    //assigning value "type" variable
     if(tokens[2] == "ask") {
         type = OrderBookType::ask;
     } else if(tokens[2] == "bid") {
@@ -184,9 +192,8 @@ void MerkelMain::printMin(const std::vector<std::string> &tokens) {
 
     //saving all match with parameters orders
     entries = orderBook.getOrders(type, product, currentTime);
-
     if(entries.empty()) {
-        std::cout << "No matching orders found" << std::endl;
+        std::cout << "MerkelMain::printMin No matching orders found" << std::endl;
         return;
     }
 
@@ -199,6 +206,7 @@ void MerkelMain::printMin(const std::vector<std::string> &tokens) {
         std::cout << "Min bid: ";
     }
 
+    //printing the lowest price
     std::cout << OrderBook::getLowPrice(entries) << std::endl;
 }
 
@@ -207,7 +215,20 @@ void MerkelMain::printMax(std::vector<std::string> const &tokens) {
     std::string product = tokens[1];
     std::vector<OrderBookEntry> entries;
 
-    //finding order type
+    //check for existence of the product
+    std::vector<std::string> listOfProducts = orderBook.getKnownProducts(currentTime);
+    for(std::string &s : listOfProducts) {
+        if(s == product) {
+            break;
+        }
+
+        if(s != product && s == listOfProducts.back()) {
+            std::cout << "MerkelMain::printMax no matching product for current time" << std::endl;
+            return;
+        }
+    }
+
+    //assigning value "type" variable
     if(tokens[2] == "ask") {
         type = OrderBookType::ask;
     } else if(tokens[2] == "bid") {
@@ -219,9 +240,8 @@ void MerkelMain::printMax(std::vector<std::string> const &tokens) {
 
     //saving all match with parameters orders
     entries = orderBook.getOrders(type, product, currentTime);
-
     if(entries.empty()) {
-        std::cout << "No matching orders found" << std::endl;
+        std::cout << "MerkelMain::printMax No matching orders found" << std::endl;
         return;
     }
 
@@ -234,76 +254,202 @@ void MerkelMain::printMax(std::vector<std::string> const &tokens) {
         std::cout << "Max bid: ";
     }
 
+    //printing the highest price
     std::cout << OrderBook::getHighPrice(entries) << std::endl;
 }
 
-void MerkelMain::enterAsk() {
-    std::cout << "Make an ask - enter the amount: product(crypto you want to sell/crypto you want to get), price and amount (eg ETH/BTC,10,0.5) " << std::endl;
-    std::string input;
-    std::getline(std::cin, input);
+void MerkelMain::printAvg(const std::vector<std::string> &tokens) {
+    OrderBookType type;
+    std::string product = tokens[1];
+    int numberOfTimeStamps = 0;
 
-    std::vector<std::string> tokens = CSVReader::tokenise(input, ',');
-    if(tokens.size() != 3) {
-        std::cout << "MerkelMain::enterAsk Bad input" << std::endl;
+
+    //assigning value to "value" variable
+    if(tokens[2] == "ask") {
+        type = OrderBookType::ask;
+    } else if(tokens[2] == "bid") {
+        type = OrderBookType::bid;
     } else {
-        try {
-            OrderBookEntry obe = CSVReader::stringsToOBE(tokens[1], tokens[2], currentTime, tokens[0], OrderBookType::ask);
-            obe.username = "simUser";
-            if(wallet.canFulfillOrder(obe)) {
-                std::cout << "You successfully added ask" << std::endl;
-                orderBook.insertOrder(obe);
-            } else {
-                std::cout << "Wallet has insufficient funds" << std::endl;
-            }
-
-        } catch(const std::exception& e) {
-            std::cout << "MerkelMain::enterAsk Bad input" << std::endl;
-        }
+        std::cout << "MerkelMain::printAvg unknowns order type" << std::endl;
+        return;
     }
+
+    //assigning value to "numberOfTimeStamps" variable
+    try {
+        numberOfTimeStamps = std::stoi(tokens[3]);
+    }catch(const std::exception& e){
+        std::cout << "MerkelMain::printAvg Bad integer " << tokens[3]<< std::endl;
+        return;
+    }
+
+    std::string timeStep = currentTime;
+    double totalAvg = 0;
+
+    //moving to the prev time stamps and adding their avg to totalAvg
+    for(int i = 0; i < numberOfTimeStamps; i++) {
+        timeStep = orderBook.getPrevTime(timeStep);
+        std::vector<OrderBookEntry> entries = orderBook.getOrders(type, product, timeStep);
+
+        //If timeStamp is empty, it means the previous timeStamp was the first and no timeStamp left to check.
+        if(timeStep.empty()) {
+            std::cout << "MerkelMain::printAvg reached the first time stamp" << std::endl;
+            if(i == 0) {
+                std::cout << "Impossible to return average price, because current time stamp is the first" << std::endl;
+            } else {
+                std::cout << "Total average price from " << i << " time stamps: " << totalAvg / i << std::endl;
+            }
+            return;
+        }
+
+        //print if orders are not found on current time stamp
+        if(entries.empty()) {
+            std::cout << i + 1 << ") Orders aren't found at " << timeStep << " time stamp" << std::endl;
+            continue;
+        }
+
+        double avg = OrderBook::getAvgPrice(entries);
+
+        std::cout << i + 1 << ") Average price at " << timeStep << ": " << avg << std::endl;
+        totalAvg += avg;
+    }
+
+    //print total average price
+    std::cout << "Total average price: " << totalAvg / numberOfTimeStamps << std::endl;
 }
 
-void MerkelMain::enterBid() {
-    std::cout << "Make a bid - enter the amount: product(crypto you want to buy/crypto you want to pay with), price and amount (eg ETH/BTC,10,0.5) " << std::endl;
-    std::string input;
-    std::getline(std::cin, input);
+void MerkelMain::printPrediction(const std::vector<std::string> &tokens) {
+    //change name of variable to "measurement" or "unit"
+    std::string value;
+    std::string product = tokens[2];
+    OrderBookType type;
 
-    std::vector<std::string> tokens = CSVReader::tokenise(input, ',');
-    if(tokens.size() != 3) {
-        std::cout << "MerkelMain::enterBid Bad input" << std::endl;
+
+    //assigning value to "value" variable
+    if(tokens[1] == "max") {
+        value = "max";
+    } else if(tokens[1] == "min") {
+        value = "min";
     } else {
-        try {
-            OrderBookEntry obe = CSVReader::stringsToOBE(tokens[1], tokens[2], currentTime, tokens[0], OrderBookType::bid);
-            obe.username = "simUser";
-            if(wallet.canFulfillOrder(obe)) {
-                std::cout << "You successfully added bid" << std::endl;
-                orderBook.insertOrder(obe);
-            } else {
-                std::cout << "Wallet has insufficient funds" << std::endl;
-            }
-
-        } catch(const std::exception& e) {
-            std::cout << "MerkelMain::enterBid Bad input" << std::endl;
-        }
+        std::cout << "MerkelMain::printPrediction unknowns value" << std::endl;
+        return;
     }
-}
 
-void MerkelMain::printWallet() {
-    std::cout << wallet.toString();
-    wallet.removeCurrency("USDT", 1500);
+    //assigning value "type" variable
+    if(tokens[3] == "ask") {
+        type = OrderBookType::ask;
+    } else if(tokens[3] == "bid") {
+        type = OrderBookType::bid;
+    } else {
+        std::cout << "MerkelMain::printPrediction unknowns order type" << std::endl;
+        return;
+    }
+
+
+    std::string timeStamp = currentTime;
+    std::vector<OrderBookEntry> entries;
+    double prevPrice = -1;
+    double curPrice = -1;
+    int cnt = 0;
+    //finding previous and current price of the product
+    while(cnt < 1000) {
+        //If timeStamp is empty, it means the previous timeStamp was the first and no timeStamp left to check.
+        //Also, if while loop was not interrupt then, prevPrice or curPrice are not assigned and not enough information
+        //collected to make prediction.
+        if(timeStamp.empty()) {
+            std::cout << "MerkelMain::printPrediction reached the first time stamp" << std::endl;
+            std::cout << "Impossible to print prediction because "
+                         "there is no enough information about this product on the previous time stamps" << std::endl;
+            return;
+        }
+
+        entries = orderBook.getOrders(type, product, timeStamp);
+        //skipping current timeStamp if entries is empty.
+        if(entries.empty()) {
+            timeStamp = orderBook.getPrevTime(timeStamp);
+            cnt++;
+            continue;
+        }
+
+        //assigning values to curPrice and prevPrice variables
+        if(curPrice == -1) {
+            if(value == "max") {
+                curPrice = OrderBook::getHighPrice(entries);
+            } else if(value == "min") {
+                curPrice = OrderBook::getLowPrice(entries);
+            }
+            cnt = 0;
+        } else if(prevPrice == -1) {
+            if(value == "max") {
+                prevPrice = OrderBook::getHighPrice(entries);
+            } else if(value == "min") {
+                prevPrice = OrderBook::getLowPrice(entries);
+            }
+            break;
+        }
+
+        timeStamp = orderBook.getPrevTime(timeStamp);
+        cnt++;
+    }
+
+    //if no previous price was found, print exception for user
+    if(prevPrice == -1) {
+        std::cout << "MerkelMain::printPrediction Sorry, but advisorBot couldn't make prediction" << std::endl;
+        std::cout << "Most likely you entered wrong product name or there is no " << tokens[3];
+        std::cout << " in csv file, for product you entered" << std::endl;
+        return;
+    }
+
+    //print answer
+    std::cout << "Previous price: " <<  prevPrice << " " << "Current price " <<  curPrice << std::endl;
+    std::cout << "Prediction: new " << value + " " << product + " " << tokens[3] + " " << "price will be ";
+    std::cout << ((curPrice - prevPrice) * -2 / 10) + curPrice << std::endl;
 }
 
 void MerkelMain::gotoNextTimeframe() {
-    std::cout << "Going to next time frame. " << std::endl;
-    std::vector<OrderBookEntry> sales = orderBook.matchAsksToBids("ETH/BTC", currentTime);
+    std::cout << "Going to the next time frame. " << std::endl;
+
+    std::vector<OrderBookEntry> sales = orderBook.matchAsksToBids(currentTime);
     std::cout  << "Sales: " << sales.size() << std::endl;
-    for(OrderBookEntry& sale : sales) {
-        std::cout << "Sale price: " << sale.price << " amount: " << sale.amount << std::endl;
-        if(sale.username == "simUser") {
-            wallet.processSale(sale);
+
+    std::string currentProduct = "";
+    for(OrderBookEntry &e : sales) {
+        if(currentProduct != e.product) {
+            currentProduct = e.product;
+            std::cout << currentProduct << std::endl;
         }
+
+        std::cout << "Sale price: " << e.price << " amount: " << e.amount << std::endl;
     }
+
     currentTime = orderBook.getNextTime(currentTime);
+    if(currentTime.empty()) {
+        std::cout << "MerkelMain::gotoNextTimeframe reached the last time stamp" << std::endl;
+        std::cout << "Current time will be set to the first time stamp" << std::endl;
+        currentTime = orderBook.setCurrentTime(1);
+    }
+    std::cout << "new time stamp: " << currentTime << std::endl;
 }
+
+void MerkelMain::gotoPrevTimeframe() {
+    std::cout << "Going to the previous time frame." << std::endl;
+    currentTime = orderBook.getPrevTime(currentTime);
+    if(currentTime.empty()) {
+        std::cout << "MerkelMain::gotoNextTimeframe reached the first time stamp" << std::endl;
+        std::cout << "Current time will be set to the last time stamp" << std::endl;
+        currentTime = orderBook.setCurrentTime(orderBook.getEntriesSize());
+    }
+    std::cout << "new time stamp: " << currentTime << std::endl;
+}
+
+void MerkelMain::goForwardTimeframe(int &steps) {
+
+}
+
+void MerkelMain::goBackTimeframe(int &steps) {
+
+}
+
+
 
 
 

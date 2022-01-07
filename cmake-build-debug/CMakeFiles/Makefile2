@@ -78,12 +78,12 @@ clean: CMakeFiles\Starter_code_topic_4.dir\clean
 CMakeFiles\Starter_code_topic_4.dir\all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starter_code_topic_4.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starter_code_topic_4.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" --progress-num=1,2,3,4,5,6,7 "Built target Starter_code_topic_4"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" --progress-num=1,2,3,4,5,6 "Built target Starter_code_topic_4"
 .PHONY : CMakeFiles\Starter_code_topic_4.dir\all
 
 # Build rule for subdir invocation for target.
 CMakeFiles\Starter_code_topic_4.dir\rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" 7
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\all
 	$(CMAKE_COMMAND) -E cmake_progress_start "D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" 0
 .PHONY : CMakeFiles\Starter_code_topic_4.dir\rule

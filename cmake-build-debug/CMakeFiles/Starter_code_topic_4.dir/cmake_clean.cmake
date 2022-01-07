@@ -3,7 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starter_code_topic_4.dir/MerkelMain.cpp.obj"
   "CMakeFiles/Starter_code_topic_4.dir/OrderBook.cpp.obj"
   "CMakeFiles/Starter_code_topic_4.dir/OrderBookEntry.cpp.obj"
-  "CMakeFiles/Starter_code_topic_4.dir/Wallet.cpp.obj"
   "CMakeFiles/Starter_code_topic_4.dir/main.cpp.obj"
   "Starter_code_topic_4.exe"
   "Starter_code_topic_4.exe.manifest"

@@ -156,33 +156,13 @@ CMakeFiles\Starter_code_topic_4.dir\OrderBook.cpp.s: cmake_force
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Starter_code_topic_4.dir\OrderBook.cpp.s /c "D:\UoL\OOP\unzipped\Starter code topic 4\OrderBook.cpp"
 <<
 
-CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.obj: CMakeFiles\Starter_code_topic_4.dir\flags.make
-CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.obj: ..\Wallet.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Starter_code_topic_4.dir/Wallet.cpp.obj"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1428~1.293\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.obj /FdCMakeFiles\Starter_code_topic_4.dir\ /FS -c "D:\UoL\OOP\unzipped\Starter code topic 4\Wallet.cpp"
-<<
-
-CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starter_code_topic_4.dir/Wallet.cpp.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1428~1.293\bin\Hostx86\x86\cl.exe > CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\UoL\OOP\unzipped\Starter code topic 4\Wallet.cpp"
-<<
-
-CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starter_code_topic_4.dir/Wallet.cpp.s"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1428~1.293\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.s /c "D:\UoL\OOP\unzipped\Starter code topic 4\Wallet.cpp"
-<<
-
 # Object files for target Starter_code_topic_4
 Starter_code_topic_4_OBJECTS = \
 "CMakeFiles\Starter_code_topic_4.dir\CSVReader.cpp.obj" \
 "CMakeFiles\Starter_code_topic_4.dir\main.cpp.obj" \
 "CMakeFiles\Starter_code_topic_4.dir\MerkelMain.cpp.obj" \
 "CMakeFiles\Starter_code_topic_4.dir\OrderBookEntry.cpp.obj" \
-"CMakeFiles\Starter_code_topic_4.dir\OrderBook.cpp.obj" \
-"CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.obj"
+"CMakeFiles\Starter_code_topic_4.dir\OrderBook.cpp.obj"
 
 # External object files for target Starter_code_topic_4
 Starter_code_topic_4_EXTERNAL_OBJECTS =
@@ -192,10 +172,9 @@ Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\main.cpp.obj
 Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\MerkelMain.cpp.obj
 Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\OrderBookEntry.cpp.obj
 Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\OrderBook.cpp.obj
-Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.obj
 Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\build.make
 Starter_code_topic_4.exe: CMakeFiles\Starter_code_topic_4.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Starter_code_topic_4.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable Starter_code_topic_4.exe"
 	"C:\Program Files\JetBrains\CLion 2020.3.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\Starter_code_topic_4.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1428~1.293\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\Starter_code_topic_4.dir\objects1.rsp @<<
  /out:Starter_code_topic_4.exe /implib:Starter_code_topic_4.lib /pdb:"D:\UoL\OOP\unzipped\Starter code topic 4\cmake-build-debug\Starter_code_topic_4.pdb" /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

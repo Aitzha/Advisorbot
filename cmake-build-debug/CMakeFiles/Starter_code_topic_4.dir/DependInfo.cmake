@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "D:/UoL/OOP/unzipped/Starter code topic 4/MerkelMain.cpp" "D:/UoL/OOP/unzipped/Starter code topic 4/cmake-build-debug/CMakeFiles/Starter_code_topic_4.dir/MerkelMain.cpp.obj"
   "D:/UoL/OOP/unzipped/Starter code topic 4/OrderBook.cpp" "D:/UoL/OOP/unzipped/Starter code topic 4/cmake-build-debug/CMakeFiles/Starter_code_topic_4.dir/OrderBook.cpp.obj"
   "D:/UoL/OOP/unzipped/Starter code topic 4/OrderBookEntry.cpp" "D:/UoL/OOP/unzipped/Starter code topic 4/cmake-build-debug/CMakeFiles/Starter_code_topic_4.dir/OrderBookEntry.cpp.obj"
-  "D:/UoL/OOP/unzipped/Starter code topic 4/Wallet.cpp" "D:/UoL/OOP/unzipped/Starter code topic 4/cmake-build-debug/CMakeFiles/Starter_code_topic_4.dir/Wallet.cpp.obj"
   "D:/UoL/OOP/unzipped/Starter code topic 4/main.cpp" "D:/UoL/OOP/unzipped/Starter code topic 4/cmake-build-debug/CMakeFiles/Starter_code_topic_4.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "MSVC")

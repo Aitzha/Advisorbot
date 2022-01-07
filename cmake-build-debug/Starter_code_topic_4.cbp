@@ -110,12 +110,6 @@
 		<Unit filename="D:/UoL/OOP/unzipped/Starter code topic 4/OrderBookEntry.h">
 			<Option target="Starter_code_topic_4"/>
 		</Unit>
-		<Unit filename="D:/UoL/OOP/unzipped/Starter code topic 4/Wallet.cpp">
-			<Option target="Starter_code_topic_4"/>
-		</Unit>
-		<Unit filename="D:/UoL/OOP/unzipped/Starter code topic 4/Wallet.h">
-			<Option target="Starter_code_topic_4"/>
-		</Unit>
 		<Unit filename="D:/UoL/OOP/unzipped/Starter code topic 4/main.cpp">
 			<Option target="Starter_code_topic_4"/>
 		</Unit>

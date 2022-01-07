@@ -235,33 +235,6 @@ OrderBookEntry.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starter_code_topic_4.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\OrderBookEntry.cpp.s
 .PHONY : OrderBookEntry.cpp.s
 
-Wallet.obj: Wallet.cpp.obj
-
-.PHONY : Wallet.obj
-
-# target to build an object file
-Wallet.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starter_code_topic_4.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.obj
-.PHONY : Wallet.cpp.obj
-
-Wallet.i: Wallet.cpp.i
-
-.PHONY : Wallet.i
-
-# target to preprocess a source file
-Wallet.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starter_code_topic_4.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.i
-.PHONY : Wallet.cpp.i
-
-Wallet.s: Wallet.cpp.s
-
-.PHONY : Wallet.s
-
-# target to generate assembly for a file
-Wallet.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starter_code_topic_4.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\Starter_code_topic_4.dir\Wallet.cpp.s
-.PHONY : Wallet.cpp.s
-
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -310,9 +283,6 @@ help:
 	@echo ... OrderBookEntry.obj
 	@echo ... OrderBookEntry.i
 	@echo ... OrderBookEntry.s
-	@echo ... Wallet.obj
-	@echo ... Wallet.i
-	@echo ... Wallet.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

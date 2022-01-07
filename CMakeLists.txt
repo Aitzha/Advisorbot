@@ -15,5 +15,4 @@ add_executable(Starter_code_topic_4
         OrderBookEntry.h
         OrderBook.cpp
         OrderBook.h
-        Wallet.cpp
-        Wallet.h)
+        )
