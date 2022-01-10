@@ -79,7 +79,7 @@ std::string OrderBook::getEarliestTime() {
 }
 
 std::string OrderBook::getNextTime(std::string timestamp) {
-
+    //It does not loop over dataset if reaches the final timestamp
     std::string next_timestamp = "";
     for(OrderBookEntry& e : orders) {
         if(e.timestamp > timestamp) {
@@ -127,12 +127,12 @@ std::string OrderBook::setCurrentTime(int a) {
     return currentTimeStamp;
 }
 
-void OrderBook::insertOrder(OrderBookEntry &order) {
-    orders.push_back(order);
-    std::sort(orders.begin(), orders.end(), OrderBookEntry::compareTimestamps);
-}
 
 std::vector<OrderBookEntry> OrderBook::matchAsksToBids(std::string &timestamp) {
+    /*
+     * The only optimisation I made for this function is to make find matches for every product on the current timestamp
+     * and not only one.
+     */
     //sales
     std::vector<OrderBookEntry> sales;
 

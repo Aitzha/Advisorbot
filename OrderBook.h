@@ -27,8 +27,6 @@ public:
     //returns "orders" array size
     int getEntriesSize();
 
-    void insertOrder(OrderBookEntry& order);
-
     std::vector<OrderBookEntry> matchAsksToBids(std::string &timestamp);
 
     static double getHighPrice(std::vector<OrderBookEntry> &orders);

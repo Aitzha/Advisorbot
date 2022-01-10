@@ -21,12 +21,12 @@ private:
     void printPrediction(std::vector<std::string> const &tokens);
     void gotoNextTimeframe();
     void gotoPrevTimeframe();
-    void goForwardTimeframe(int &steps);
-    void goBackTimeframe(int &steps);
-    void processUserOption();
+    void goForthTimeframes(std::string &steps);
+    void goBackTimeframes(std::string &steps);
+    void processUserInput();
 
     std::string currentTime;
 
     //read 20200317.csv
-    OrderBook orderBook{"D:/UoL/OOP/unzipped/Starter code topic 4/test.csv"};
-}; 
+    OrderBook orderBook{"D:/UoL/OOP/unzipped/Starter code topic 4/20200601.csv"};
+};

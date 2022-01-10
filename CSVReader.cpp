@@ -55,7 +55,6 @@ OrderBookEntry CSVReader::stringsToOBE(std::vector<std::string> tokens)
 
     if (tokens.size() != 5) // bad
     {
-        //std::cout << "Bad line " << std::endl;
         throw std::exception{};
     }
     // we have 5 tokens
